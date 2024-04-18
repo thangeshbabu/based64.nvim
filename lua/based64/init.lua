@@ -35,24 +35,35 @@ local function executer(action)
 
         -- multiline selection is not allowed, because there is no multiple line base64.
         if start_row ~= end_row then 
-            error("Multiline Visual Selection is not allowed.")
+            print("Multiline Visual Selection is not allowed.")
+            return
         end 
+
 
         -- swap start and end if start is greater than end
         if start_col > end_col then 
+
             tmp=start_col
             start_col=end_col
             end_col=tmp
+
         end
+        
 
         local selected_text=get_visually_selected_string(start_row, start_col, end_row, end_col)
         local result = base64(selected_text,action)
 
-        -- print(start_row, start_col, end_row, end_col)
+        -- Replace the selected text with the result
         vim.api.nvim_buf_set_text(0, start_row-1, start_col-1, end_row-1, end_col, {result})
+
+
+       -- Exit visual mode
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'x', false)
 
-        -- hello hello aGVsbG8K
+        -- Move the cursor to the start of the selection 
+        vim.api.nvim_win_set_cursor(0, {start_row, start_col-1})
+
+        -- hello aGVsbG8K aGVsbG8K
 end
 
 function M.encode()
