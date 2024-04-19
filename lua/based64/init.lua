@@ -53,17 +53,16 @@ local function executer(action)
         local selected_text=get_visually_selected_string(start_row, start_col, end_row, end_col)
         local result = base64(selected_text,action)
 
-        -- Replace the selected text with the result
-        vim.api.nvim_buf_set_text(0, start_row-1, start_col-1, end_row-1, end_col, {result})
-
-
-       -- Exit visual mode
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'x', false)
+       -- Replace the selected text with the result
+       vim.api.nvim_buf_set_text(0, start_row-1, start_col-1, end_row-1, end_col, {result})
 
         -- Move the cursor to the start of the selection 
-        vim.api.nvim_win_set_cursor(0, {start_row, start_col-1})
+       vim.api.nvim_win_set_cursor(0, {start_row, start_col-1})
 
-        -- hello aGVsbG8K aGVsbG8K
+       -- go to normal mode
+        vim.api.nvim_input('<Esc>')
+
+       -- hello aGVsbG8K aGVsbG8K
 end
 
 function M.encode()
@@ -75,3 +74,4 @@ function M.decode()
 end
 
 return M
+
