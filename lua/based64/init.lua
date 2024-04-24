@@ -13,9 +13,9 @@ local function base64(str,action)
     local command =""
 
     if action == "encode" then
-        command = "base64"
+        command = "echo -n '" ..str .."' | base64"
     elseif action == "decode" then
-        command = "base64 -d"
+        command = "echo -n '" ..str .."' | base64 -d"
     end
 
     local handle = io.popen("<<< '" .. str .. "' " .. command)
