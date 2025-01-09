@@ -14,6 +14,7 @@ local function base64(str,action)
 
     if action == "encode" then
         command = "echo -n '" ..str .."' | base64"
+        vim.notify(command, vim.log.levels.TRACE)
     elseif action == "decode" then
         command = "echo '" ..str .."' | base64 -d"
     end
