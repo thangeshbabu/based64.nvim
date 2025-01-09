@@ -13,13 +13,16 @@ local function base64(str,action)
     local command =""
 
     if action == "encode" then
-        command = "echo " .."-n '" ..str .."' | base64"
+        command = "echo -n '"..str.."' | base64"
         vim.notify(command, vim.log.levels.TRACE)
     elseif action == "decode" then
-        command = "echo '" ..str .."' | base64 -d"
+        command = "echo '" ..str.."' | base64 -d"
     end
 
-    local handle = io.popen("<<< '" .. str .. "' " .. command)
+    final_command=("<<< '" .. str .. "' " .. command)
+    vim.notify(final_command, vim.log.levels.TRACE)
+    
+    local handle = io.popen(final_command)
     local result = string.gsub(handle:read("*a"), "\n", "")
     handle:close()
 
