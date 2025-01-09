@@ -13,7 +13,7 @@ local function base64(str,action)
     local command =""
 
     if action == "encode" then
-        command = "echo -n '" ..str .."' | base64"
+        command = "echo " .."-n '" ..str .."' | base64"
         vim.notify(command, vim.log.levels.TRACE)
     elseif action == "decode" then
         command = "echo '" ..str .."' | base64 -d"
